@@ -4,12 +4,15 @@ const services = require("./services");
 const { createPollSchema, voteSchema } = require("./schemas");
 const db = require("../db/mongodb");
 const { options } = require("joi");
-const mongodb = require("../db/mongodb");
+
+const { auth } = require("../middleware");
 
 router.get("/", async (req, res) => {
   const polls = await services.getAllPolls();
   res.status(200).json(polls);
 });
+
+router.use(auth);
 
 router.get("/:id", async (req, res) => {
   const pollId = req.params.id;
