@@ -9,8 +9,9 @@ const mongan = require("morgan");
 
 app.use(express.json());
 app.use("/auth", auth);
+
+app.use(mongan());
 app.use("/polls", polls);
-app.use(mongan);
 
 async function start() {
   await db.init();
