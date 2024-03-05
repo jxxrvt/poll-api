@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const db = require("../db/mongodb");
+const http = require("http");
+const { func } = require("joi");
 
 async function findUserByID(id) {
   try {

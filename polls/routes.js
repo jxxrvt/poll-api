@@ -38,6 +38,13 @@ router.post("/", async (req, res) => {
     };
   });
 
+  try {
+    const createPoll = db.vote(value, options);
+    res.status(201).json("created", createPoll);
+  } catch (error) {
+    res.status(500).json({ message: "poll not created!" });
+  }
+
   const collection = await db
     .getDB()
     .collection(db.pollsCollection)
@@ -50,8 +57,8 @@ router.post("/", async (req, res) => {
 router.post("/:id/vote", async (req, res) => {
   const pollId = req.params.id;
   const { option } = req.body;
-
   // Validação do schema
+
   const { error } = voteSchema.validate(req.body);
   if (error) {
     return res.status(400).json({ error: error.details });
